@@ -1,2 +1,5 @@
+[ignore]
+.*node_modules/config-chain/.*
+
 [options]
 module.name_mapper='^.*\.s?css$' -> 'css-module-flow'

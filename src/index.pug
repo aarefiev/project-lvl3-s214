@@ -3,13 +3,6 @@ html
   head
     title= htmlWebpackPlugin.options.title
   body
-    .container
-      .row
-        .col-12
-          .d-flex.justify-content-center
-            .jumbotron.col-md-6
-              form
-                .form-group
-                  label(for="input-url") Url address
-                  input(type="url", placeholder="Введите URL").form-control#input-url
-                button.btn.btn-primary(type="submit") Отправить
+    #application
+    script(type="text/javascript").
+      app.default()

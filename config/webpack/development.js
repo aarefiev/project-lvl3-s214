@@ -1,11 +1,13 @@
-import webpack from 'webpack';
-import webpackMerge from 'webpack-merge';
-import getBaseConfig from './base';
+const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const baseConfig = require('./base.js');
 
-export default () => webpackMerge(getBaseConfig(), {
+module.exports = webpackMerge(baseConfig, {
   devtool: '#cheap-module-eval-source-map',
   devServer: {
     hot: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 });

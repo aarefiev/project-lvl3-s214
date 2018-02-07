@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`application 1`] = `
+"<div id=\\"application\\">
+    <div class=\\"container\\">
+        <div class=\\"row\\">
+            <div class=\\"col-12\\">
+                <div class=\\"d-flex justify-content-center\\">
+                    <div class=\\"jumbotron col-md-6\\">
+                        <form id=\\"rss_form\\">
+                            <div class=\\"form-group\\">
+                                <label for=\\"rss_input_url\\">URL адрес</label>
+                                <input type=\\"text\\" value=\\"\\" placeholder=\\"Введите URL\\" class=\\"form-control\\" id=\\"rss_input_url\\">
+                            </div>
+                            <button type=\\"submit\\" class=\\"btn btn-primary\\">Добавить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`application 2`] = `
+"<div id=\\"application\\">
+    <div class=\\"container\\">
+        <div class=\\"row\\">
+            <div class=\\"col-12\\">
+                <div class=\\"d-flex justify-content-center\\">
+                    <div class=\\"jumbotron col-md-6\\">
+                        <form id=\\"rss_form\\">
+                            <div class=\\"form-group\\">
+                                <label for=\\"rss_input_url\\">URL адрес</label>
+                                <input type=\\"text\\" value=\\"h\\" placeholder=\\"Введите URL\\" class=\\"form-control is-invalid\\" id=\\"rss_input_url\\">
+                            </div>
+                            <button type=\\"submit\\" class=\\"btn btn-primary\\">Добавить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`application 3`] = `
+"<div id=\\"application\\">
+    <div class=\\"container\\">
+        <div class=\\"row\\">
+            <div class=\\"col-12\\">
+                <div class=\\"d-flex justify-content-center\\">
+                    <div class=\\"jumbotron col-md-6\\">
+                        <form id=\\"rss_form\\">
+                            <div class=\\"form-group\\">
+                                <label for=\\"rss_input_url\\">URL адрес</label>
+                                <input type=\\"text\\" value=\\"http://lorem-rss.herokuapp.com/feed\\" placeholder=\\"Введите URL\\" class=\\"form-control is-invalid\\" id=\\"rss_input_url\\">
+                            </div>
+                            <button type=\\"submit\\" class=\\"btn btn-primary\\">Добавить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>"
+`;

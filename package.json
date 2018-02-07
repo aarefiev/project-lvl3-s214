@@ -1,14 +1,14 @@
 {
   "name": "rss-reader-aarefiev",
   "version": "0.0.1",
-  "description": "",
+  "description": "Project for level 3 on Hexlet.io",
   "scripts": {
     "babel-node": "babel-node",
     "flow": "flow",
     "flow-typed": "flow-typed",
     "eslint": "eslint",
-    "webpack": "webpack",
-    "webpack-dev-server": "webpack-dev-server"
+    "test": "jest",
+    "dev-server": "node server"
   },
   "repository": {
     "type": "git",
@@ -21,16 +21,25 @@
   },
   "homepage": "https://github.com/aarefiev/project-lvl3-s214#readme",
   "dependencies": {
+    "argv-parse": "^1.0.1",
+    "axios": "^0.17.1",
     "babel-loader": "*",
     "babel-plugin-syntax-dynamic-import": "*",
+    "bootstrap": "^4.0.0",
+    "express": "^4.16.2",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.12.9",
+    "validator": "^9.4.0",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1",
-    "bootstrap": "^4.0.0",
-    "jquery": "^3.3.1",
-    "popper.js": "^1.12.9"
+    "html-webpack-plugin": "^2.30.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "webpack-dev-middleware": "^2.0.4"
   },
   "devDependencies": {
     "babel-eslint": "*",
+    "babel-jest": "*",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "*",
     "babel-preset-flow": "*",
     "babel-preset-stage-0": "*",
@@ -44,15 +53,22 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "extract-text-webpack-plugin": "^3.0.2",
     "flow-bin": "^0.57",
     "flow-typed": "*",
-    "html-webpack-plugin": "^2.30.1",
+    "jest": "^22.1.4",
+    "jest-cli": "^22.1.4",
+    "js-beautify": "^1.7.5",
+    "keycode": "^2.1.9",
+    "moxios": "^0.4.0",
     "node-sass": "^4.7.2",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.20.1",
-    "webpack-dev-server": "^2.11.1"
+    "style-loader": "^0.20.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.s?css$": "<rootDir>/config/jest/__mocks__/styles.js"
+    }
   }
 }

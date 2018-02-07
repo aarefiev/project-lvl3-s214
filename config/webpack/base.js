@@ -1,16 +1,15 @@
-import path from 'path';
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({ filename: 'styles.css' });
 
-export default () => ({
+module.exports = {
   entry: './src/index.js',
   output: {
-    library: 'RSSReader',
+    library: 'app',
     path: path.join(__dirname, '../../dist'),
-    filename: 'index.js',
+    filename: 'application.js',
   },
   module: {
     rules: [
@@ -34,6 +33,7 @@ export default () => ({
             ],
             plugins: [
               'syntax-dynamic-import',
+              'transform-class-properties',
             ],
           },
         },
@@ -42,7 +42,7 @@ export default () => ({
         test: /\.pug$/,
         exclude: /node_modules/,
         use: {
-          loader: 'pug-loader'
+          loader: 'pug-loader',
         },
       },
       {
@@ -50,8 +50,8 @@ export default () => ({
         use: extractSass.extract({
           use: [
             { loader: 'css-loader' },
-            { loader: 'sass-loader' }
-          ]
+            { loader: 'sass-loader' },
+          ],
         }),
       },
     ],
@@ -60,7 +60,11 @@ export default () => ({
     new HtmlWebpackPlugin({
       title: 'RSSReader',
       template: path.join(__dirname, '../../src/index.pug'),
+      inject: 'head',
     }),
-    extractSass
+    extractSass,
   ],
-});
+  devServer: {
+    hot: false,
+  },
+};
