@@ -8,7 +8,7 @@ const getFeedContent = (urlAddress: string): Promise<string> => {
   urlObject.searchParams.append('url', urlAddress);
 
   return new Promise((resolve, reject) => {
-    axios.get(urlObject)
+    axios.get(urlObject.toString())
       .then(({ data }) => resolve(data))
       .catch(error => reject(error));
   });
@@ -29,6 +29,28 @@ const parseFeedContentToDom = (feedContent: string): Promise<mixed> => {
     resolve(doc);
   });
 };
+
+const parseFeedData = (feedNode: any): Promise<mixed> =>
+  new Promise((resolve, reject) => {
+    const channelNode = feedNode.querySelector('channel');
+
+    if (channelNode === null) {
+      reject(new Error('Invalid RSS format'));
+      return;
+    }
+
+    const feedItems = [...channelNode.querySelectorAll('item')]
+      .map(item => ({
+        title: item.querySelector('title').textContent,
+        link: item.querySelector('link').innerHTML,
+      }));
+
+    resolve({
+      title: channelNode.querySelector('title').textContent,
+      description: channelNode.querySelector('description').textContent,
+      items: feedItems,
+    });
+  });
 
 export default class {
   rootNode: any;
@@ -76,37 +98,14 @@ export default class {
     getFeedContent(this.state.url)
       .then(parseFeedContentToDom)
       .then((doc: any) => {
-        const channelNode = doc.querySelector('channel');
+        const feedDataPromise = parseFeedData(doc);
 
-        if (channelNode === null) {
-          throw new Error('Invalid RSS format');
-        }
-
-        const feedItems = [...channelNode.querySelectorAll('item')]
-          .map((item) => {
-            const titleNode = item.querySelector('title');
-            const linkNode = item.querySelector('link');
-
-            return {
-              title: titleNode.textContent,
-              link: linkNode.innerHTML,
-            };
-          });
-        const feed = {
-          title: channelNode.querySelector('title').textContent,
-          description: channelNode.querySelector('description').textContent,
-          items: feedItems,
-        };
-
-        this.setState({
+        feedDataPromise.then(feedData => this.setState({
           url: '',
-          isValid: false,
+          isValidURL: false,
           focus: {},
-          feeds: [...this.state.feeds, feed],
-        });
-      })
-      .catch((error) => {
-        throw error;
+          feeds: [...this.state.feeds, feedData],
+        }));
       });
   }
 
@@ -120,7 +119,7 @@ export default class {
     const rootHTMLContents = [];
 
     if (this.state.url.length > 0) {
-      inputClasses.push(this.state.isValid ? 'is-valid' : 'is-invalid');
+      inputClasses.push(this.state.isValidURL ? 'is-valid' : 'is-invalid');
     }
 
     rootHTMLContents.push(`
