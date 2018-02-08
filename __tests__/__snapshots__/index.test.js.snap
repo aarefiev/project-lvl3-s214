@@ -54,7 +54,29 @@ exports[`application 3`] = `
                         <form id=\\"rss_form\\">
                             <div class=\\"form-group\\">
                                 <label for=\\"rss_input_url\\">URL адрес</label>
-                                <input type=\\"text\\" value=\\"http://lorem-rss.herokuapp.com/feed\\" placeholder=\\"Введите URL\\" class=\\"form-control is-invalid\\" id=\\"rss_input_url\\">
+                                <input type=\\"text\\" value=\\"http://lorem-rss.herokuapp.com/feed\\" placeholder=\\"Введите URL\\" class=\\"form-control is-valid\\" id=\\"rss_input_url\\">
+                            </div>
+                            <button type=\\"submit\\" class=\\"btn btn-primary\\">Добавить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`application 4`] = `
+"<div id=\\"application\\">
+    <div class=\\"container\\">
+        <div class=\\"row\\">
+            <div class=\\"col-12\\">
+                <div class=\\"d-flex justify-content-center\\">
+                    <div class=\\"jumbotron col-md-6\\">
+                        <form id=\\"rss_form\\">
+                            <div class=\\"form-group\\">
+                                <label for=\\"rss_input_url\\">URL адрес</label>
+                                <input type=\\"text\\" value=\\"http://lorem-rss.herokuapp.com/feed\\" placeholder=\\"Введите URL\\" class=\\"form-control is-valid\\" id=\\"rss_input_url\\">
                             </div>
                             <button type=\\"submit\\" class=\\"btn btn-primary\\">Добавить</button>
                         </form>
