@@ -8,7 +8,7 @@ const getConfig = require('./webpack.config.js');
 
 const argv = parseArgv(process.argv);
 const config = getConfig(argv.env);
-const port = (process.env.PORT || 8080);
+const port = (process.env.PORT || 5000);
 
 const app = express();
 const compiler = webpack(config);
