@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -16,27 +17,29 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            presets: [
-              'flow',
-              ['env', {
-                modules: false,
-                targets: {
-                  browsers: '> 0%',
-                  uglify: true,
-                },
-                useBuiltIns: true,
-              }],
-            ],
-            plugins: [
-              'syntax-dynamic-import',
-              'transform-class-properties',
-            ],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              presets: [
+                'flow',
+                ['env', {
+                  modules: false,
+                  targets: {
+                    browsers: '> 0%',
+                    uglify: true,
+                  },
+                  useBuiltIns: true,
+                }],
+              ],
+              plugins: [
+                'syntax-dynamic-import',
+                'transform-class-properties',
+              ],
+            },
           },
-        },
+        ],
       },
       {
         test: /\.pug$/,
@@ -57,6 +60,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
     new HtmlWebpackPlugin({
       title: 'RSSReader',
       template: path.join(__dirname, '../../src/index.pug'),

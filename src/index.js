@@ -1,5 +1,7 @@
 // @flow
 
+import 'jquery';
+import 'bootstrap';
 import './assets/styles.scss';
 import RssFeedApp from './rssfeedapp';
 
