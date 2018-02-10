@@ -1,5 +1,6 @@
 // @flow
 
+import _ from 'lodash';
 import axios from 'axios';
 import isURL from 'validator/lib/isURL';
 
@@ -50,6 +51,7 @@ export default class {
   handleSubmit: any;
   handlePreview: any;
   handlePreviewClose: any;
+  handleReload: any;
 
   constructor(rootNode: mixed) {
     this.rootNode = rootNode;
@@ -66,15 +68,23 @@ export default class {
         title: '',
         description: '',
       },
+      reload: {
+        state: 'disabled',
+        timeoutId: -1,
+        delay: 5000,
+      },
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePreview = this.handlePreview.bind(this);
     this.handlePreviewClose = this.handlePreviewClose.bind(this);
+    this.handleReload = this.handleReload.bind(this);
   }
 
   handleInput({ target }: any) {
     const { value, selectionStart, selectionEnd } = target;
+    const reloadProps = { ...{}, ...this.state.reload };
+    reloadProps.state = 'disabled';
 
     this.setState({
       url: value,
@@ -85,6 +95,7 @@ export default class {
         target: 'input',
         selectionRange: [selectionStart, selectionEnd],
       },
+      reload: reloadProps,
     });
   }
 
@@ -99,12 +110,16 @@ export default class {
       .then(({ data }) => {
         const doc = parseFeedContentToDom(data);
         const feedData = parseFeedData(doc);
+        feedData.url = this.state.url;
+        const reloadProps = { ...{}, ...this.state.reload };
+        reloadProps.state = 'enabled';
 
         this.setState({
           url: '',
           isValidURL: false,
           focus: {},
           feeds: [...this.state.feeds, feedData],
+          reload: reloadProps,
         });
       });
   }
@@ -119,26 +134,57 @@ export default class {
       return;
     }
 
+    const reloadProps = { ...{}, ...this.state.reload };
+    reloadProps.state = 'disabled';
+
     this.setState({
       modal: {
         state: 'opened',
         title,
         description,
       },
+      reload: reloadProps,
     });
   }
 
   handlePreviewClose() {
+    const reloadProps = { ...{}, ...this.state.reload };
+    reloadProps.state = 'enabled';
+
     this.setState({
       modal: {
         state: 'closed',
         title: '',
         description: '',
       },
+      reload: reloadProps,
     });
   }
 
-  setState(newState: any) {
+  handleReload() {
+    const newFeedsPromise = Promise.all(this.state.feeds.map((feed) => {
+      const currentItems = feed.items;
+
+      return getFeedContent(feed.url)
+        .then(({ data }) => {
+          const doc = parseFeedContentToDom(data);
+          const { items } = parseFeedData(doc);
+
+          const comparator = (x, y) => x.link === y.link;
+          const newItems = _.differenceWith(items, currentItems, comparator);
+
+          return { ...feed, items: newItems.concat(items) };
+        });
+    }));
+
+    newFeedsPromise.then((feeds) => {
+      this.setState({
+        feeds,
+      });
+    });
+  }
+
+  setState(newState: any = {}) {
     this.state = { ...this.state, ...newState };
     this.render();
   }
@@ -276,6 +322,13 @@ export default class {
       $(modalWindow)
         .on('hidden.bs.modal', this.handlePreviewClose)
         .modal();
+    }
+
+    if (this.state.reload.state === 'enabled') {
+      const { delay } = this.state.reload;
+      this.state.reload.timeoutId = setTimeout(this.handleReload, delay);
+    } else {
+      clearTimeout(this.state.reload.timeoutId);
     }
   }
 }

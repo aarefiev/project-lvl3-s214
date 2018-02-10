@@ -68,4 +68,13 @@ test('application', async () => {
   await submitForm(form);
   await timer.start(100);
   expect(getTree()).toMatchSnapshot();
+
+  const updatedFeedInXML = fs.readFileSync(path.join(fixturesPath, 'updated_feed.xml'), 'utf8')
+    .toString();
+  nock(host)
+    .get('/api/rss')
+    .query({ url: feedURL })
+    .reply(200, updatedFeedInXML);
+  await timer.start(7000);
+  expect(getTree()).toMatchSnapshot();
 });
