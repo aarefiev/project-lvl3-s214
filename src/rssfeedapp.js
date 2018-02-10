@@ -52,6 +52,7 @@ export default class {
   handleInput: any;
   handleSubmit: any;
   handlePreview: any;
+  handlePreviewClose: any;
 
   constructor(rootNode: mixed) {
     this.rootNode = rootNode;
@@ -72,6 +73,7 @@ export default class {
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePreview = this.handlePreview.bind(this);
+    this.handlePreviewClose = this.handlePreviewClose.bind(this);
   }
 
   handleInput({ target }: any) {
@@ -125,6 +127,16 @@ export default class {
         state: 'opened',
         title,
         description,
+      },
+    });
+  }
+
+  handlePreviewClose() {
+    this.setState({
+      modal: {
+        state: 'closed',
+        title: '',
+        description: '',
       },
     });
   }
@@ -264,7 +276,9 @@ export default class {
     }
 
     if (this.state.modal.state === 'opened') {
-      $(modalWindow).modal();
+      $(modalWindow)
+        .on('hidden.bs.modal', this.handlePreviewClose)
+        .modal();
     }
   }
 }
