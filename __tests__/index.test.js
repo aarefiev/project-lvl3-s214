@@ -5,9 +5,12 @@ import 'js-polyfills/html';
 import fs from 'fs';
 import path from 'path';
 import timer from 'timer-promise';
+import axios from 'axios';
+import httpAdapter from 'axios/lib/adapters/http';
 import nock from 'nock';
 import keycode from 'keycode';
 import { html } from 'js-beautify';
+import jquery from 'jquery';
 
 import run from '../src';
 
@@ -22,17 +25,20 @@ const pressKey = (key, el = document.body, value = key) => {
   el.dispatchEvent(e);
 };
 
-const submitForm = (el = document.body) => {
+const submitForm = async (el = document.body) => {
   const e = new Event('submit');
   el.dispatchEvent(e);
+  await timer.start(100);
 };
 
 beforeAll(async () => {
   jsdom.reconfigure({ url: host }); // eslint-disable-line
+  global.$ = jquery;
 
   const initHtml = fs.readFileSync(path.join(fixturesPath, 'index.html')).toString();
 
   document.documentElement.innerHTML = initHtml;
+  axios.defaults.adapter = httpAdapter;
   nock.disableNetConnect();
   run();
 });
@@ -58,8 +64,8 @@ test('application', async () => {
     .get('/api/rss')
     .query({ url: feedURL })
     .reply(200, feedInXML);
-
-  submitForm(form);
+  await timer.start(100);
+  await submitForm(form);
   await timer.start(100);
   expect(getTree()).toMatchSnapshot();
 });

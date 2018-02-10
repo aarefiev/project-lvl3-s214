@@ -32,7 +32,7 @@ exports[`application 1`] = `
                 </div>
                 <div class=\\"modal-body\\"></div>
                 <div class=\\"modal-footer\\">
-                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Close</button>
+                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@ exports[`application 2`] = `
                 </div>
                 <div class=\\"modal-body\\"></div>
                 <div class=\\"modal-footer\\">
-                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Close</button>
+                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@ exports[`application 3`] = `
                 </div>
                 <div class=\\"modal-body\\"></div>
                 <div class=\\"modal-footer\\">
-                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Close</button>
+                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -130,10 +130,81 @@ exports[`application 4`] = `
                         <form id=\\"rss_form\\">
                             <div class=\\"form-group\\">
                                 <label for=\\"rss_input_url\\">URL адрес</label>
-                                <input type=\\"text\\" value=\\"http://lorem-rss.herokuapp.com/feed\\" placeholder=\\"Введите URL\\" class=\\"form-control is-valid\\" id=\\"rss_input_url\\">
+                                <input type=\\"text\\" value=\\"\\" placeholder=\\"Введите URL\\" class=\\"form-control\\" id=\\"rss_input_url\\">
                             </div>
                             <button type=\\"submit\\" class=\\"btn btn-primary\\">Добавить</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=\\"container\\">
+        <div class=\\"row\\">
+            <div class=\\"col-12\\">
+                <div class=\\"d-flex justify-content-center\\">
+                    <div class=\\"col-6\\">
+                        <div class=\\"list-group\\">
+                            <div class=\\"w-100\\">
+                                <h5 class=\\"mb-1\\">Lorem ipsum feed for an interval of 1 minutes</h5>
+                                <p class=\\"mb-1\\">This is a constantly updating lorem ipsum feed</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\\"col-6\\">
+                        <div class=\\"list-group\\">
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"0\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017520\\">Lorem ipsum 2018-02-07T15:32:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"1\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017460\\">Lorem ipsum 2018-02-07T15:31:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"2\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017400\\">Lorem ipsum 2018-02-07T15:30:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"3\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017340\\">Lorem ipsum 2018-02-07T15:29:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"4\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017280\\">Lorem ipsum 2018-02-07T15:28:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"5\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017220\\">Lorem ipsum 2018-02-07T15:27:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"6\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017160\\">Lorem ipsum 2018-02-07T15:26:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"7\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017100\\">Lorem ipsum 2018-02-07T15:25:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"8\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518017040\\">Lorem ipsum 2018-02-07T15:24:00+00:00</a></li>
+                            <li class=\\"list-group-item\\">
+                                <button type=\\"button\\" class=\\"btn btn-info btn-sm float-right\\" data-feed-id=\\"0\\" data-item-id=\\"9\\" data-toggle=\\"modal\\">
+                Предпросмотр
+            </button>
+                                <a target=\\"_blank\\" href=\\"http://example.com/test/1518016980\\">Lorem ipsum 2018-02-07T15:23:00+00:00</a></li>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,7 +223,7 @@ exports[`application 4`] = `
                 </div>
                 <div class=\\"modal-body\\"></div>
                 <div class=\\"modal-footer\\">
-                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Close</button>
+                    <button type=\\"button\\" class=\\"btn btn-secondary\\" data-dismiss=\\"modal\\">Закрыть</button>
                 </div>
             </div>
         </div>
