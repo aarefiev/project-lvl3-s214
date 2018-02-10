@@ -3,14 +3,11 @@
 import axios from 'axios';
 import isURL from 'validator/lib/isURL';
 
-const getFeedContent = (urlAddress: string): Promise<string> => {
+const getFeedContent = (urlAddress: string): any => {
   const urlObject = new URL('/api/rss', window.location.origin);
   urlObject.searchParams.append('url', urlAddress);
 
-  return new Promise((resolve) => {
-    axios.get(urlObject.toString())
-      .then(({ data }) => resolve(data));
-  });
+  return axios.get(urlObject.toString());
 };
 
 const parseFeedContentToDom = (feedContent: string): any => {
@@ -99,8 +96,8 @@ export default class {
     }
 
     getFeedContent(this.state.url)
-      .then((feedContent) => {
-        const doc = parseFeedContentToDom(feedContent);
+      .then(({ data }) => {
+        const doc = parseFeedContentToDom(data);
         const feedData = parseFeedData(doc);
 
         this.setState({
@@ -240,7 +237,7 @@ export default class {
             </div>
             <div class="modal-body">${description}</div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
             </div>
           </div>
         </div>
