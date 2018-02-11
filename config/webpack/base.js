@@ -66,7 +66,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: 'RSSReader',
-      favicon: path.join(__dirname, '../../src/favicon.ico'),
+      favicon: path.join(__dirname, '../../src/assets/favicon.ico'),
       template: path.join(__dirname, '../../src/index.pug'),
       inject: 'head',
     }),
