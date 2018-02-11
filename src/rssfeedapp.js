@@ -50,6 +50,7 @@ export default class {
   handleInput: any;
   handleSubmit: any;
   handlePreview: any;
+  handlePreviewOpen: any;
   handlePreviewClose: any;
   handleReload: any;
 
@@ -68,23 +69,28 @@ export default class {
         title: '',
         description: '',
       },
-      reload: {
-        state: 'disabled',
-        timeoutId: -1,
-        delay: 5000,
-      },
+      timeoutId: -1,
+      reload: 'pending',
+      intervalId: setInterval(() => {
+        if (this.state.reload === 'pending') {
+          return;
+        }
+
+        const newState = { ...this.state };
+        clearTimeout(newState.timeoutId);
+
+        if (newState.reload === 'enabled') {
+          newState.reload = 'pending';
+          newState.timeoutId = setTimeout(this.handleReload, 5000);
+        }
+
+        this.setState(newState);
+      }, 500),
     };
-    this.handleInput = this.handleInput.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePreview = this.handlePreview.bind(this);
-    this.handlePreviewClose = this.handlePreviewClose.bind(this);
-    this.handleReload = this.handleReload.bind(this);
   }
 
-  handleInput({ target }: any) {
+  handleInput = ({ target }: any) => {
     const { value, selectionStart, selectionEnd } = target;
-    const reloadProps = { ...{}, ...this.state.reload };
-    reloadProps.state = 'disabled';
 
     this.setState({
       url: value,
@@ -95,11 +101,11 @@ export default class {
         target: 'input',
         selectionRange: [selectionStart, selectionEnd],
       },
-      reload: reloadProps,
+      reload: 'disabled',
     });
   }
 
-  handleSubmit(e: any) {
+  handleSubmit = (e: any) => {
     e.preventDefault();
 
     if (!this.state.isValidURL) {
@@ -111,20 +117,18 @@ export default class {
         const doc = parseFeedContentToDom(data);
         const feedData = parseFeedData(doc);
         feedData.url = this.state.url;
-        const reloadProps = { ...{}, ...this.state.reload };
-        reloadProps.state = 'enabled';
 
         this.setState({
           url: '',
           isValidURL: false,
           focus: {},
           feeds: [...this.state.feeds, feedData],
-          reload: reloadProps,
+          reload: 'enabled',
         });
       });
   }
 
-  handlePreview(e: any) {
+  handlePreview = (e: any) => {
     e.preventDefault();
 
     const { feedId, itemId } = e.currentTarget.dataset;
@@ -134,34 +138,37 @@ export default class {
       return;
     }
 
-    const reloadProps = { ...{}, ...this.state.reload };
-    reloadProps.state = 'disabled';
-
     this.setState({
       modal: {
         state: 'opened',
         title,
         description,
       },
-      reload: reloadProps,
+      reload: 'disabled',
     });
   }
 
-  handlePreviewClose() {
-    const reloadProps = { ...{}, ...this.state.reload };
-    reloadProps.state = 'enabled';
+  handlePreviewOpen = () => {
+    const modalState = { ...this.state.modal };
+    modalState.state = 'pending';
 
+    this.setState({
+      modal: modalState,
+    });
+  }
+
+  handlePreviewClose = () => {
     this.setState({
       modal: {
         state: 'closed',
         title: '',
         description: '',
       },
-      reload: reloadProps,
+      reload: 'enabled',
     });
   }
 
-  handleReload() {
+  handleReload = () => {
     const newFeedsPromise = Promise.all(this.state.feeds.map((feed) => {
       const currentItems = feed.items;
 
@@ -180,6 +187,7 @@ export default class {
     newFeedsPromise.then((feeds) => {
       this.setState({
         feeds,
+        reload: 'enabled',
       });
     });
   }
@@ -320,15 +328,9 @@ export default class {
 
     if (this.state.modal.state === 'opened') {
       $(modalWindow)
-        .on('hidden.bs.modal', this.handlePreviewClose)
+        .on('show.bs.modal', this.handlePreviewOpen)
+        .on('hide.bs.modal', this.handlePreviewClose)
         .modal();
-    }
-
-    if (this.state.reload.state === 'enabled') {
-      const { delay } = this.state.reload;
-      this.state.reload.timeoutId = setTimeout(this.handleReload, delay);
-    } else {
-      clearTimeout(this.state.reload.timeoutId);
     }
   }
 }
