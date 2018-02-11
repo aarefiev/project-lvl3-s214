@@ -72,15 +72,17 @@ export default class {
       timeoutId: -1,
       reload: 'pending',
       intervalId: setInterval(() => {
-        if (this.state.reload === 'pending') {
+        const reloadState = this.state.reload;
+
+        if (reloadState === 'pending') {
           return;
         }
 
         const newState = { ...this.state };
+        newState.reload = 'pending';
         clearTimeout(newState.timeoutId);
 
-        if (newState.reload === 'enabled') {
-          newState.reload = 'pending';
+        if (reloadState === 'enabled') {
           newState.timeoutId = setTimeout(this.handleReload, 5000);
         }
 
