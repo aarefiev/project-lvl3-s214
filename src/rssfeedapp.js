@@ -170,27 +170,22 @@ export default class {
     });
   }
 
-  handleReload = () => {
-    const newFeedsPromise = Promise.all(this.state.feeds.map((feed) => {
+  handleReload = async () => {
+    const newFeeds = await Promise.all(this.state.feeds.map(async (feed) => {
       const currentItems = feed.items;
+      const { data } = await getFeedContent(feed.url);
+      const doc = parseFeedContentToDom(data);
+      const { items } = parseFeedData(doc);
 
-      return getFeedContent(feed.url)
-        .then(({ data }) => {
-          const doc = parseFeedContentToDom(data);
-          const { items } = parseFeedData(doc);
+      const comparator = (x, y) => x.link === y.link;
+      const newItems = _.differenceWith(items, currentItems, comparator);
 
-          const comparator = (x, y) => x.link === y.link;
-          const newItems = _.differenceWith(items, currentItems, comparator);
-
-          return { ...feed, items: newItems.concat(items) };
-        });
+      return { ...feed, items: newItems.concat(items) };
     }));
 
-    newFeedsPromise.then((feeds) => {
-      this.setState({
-        feeds,
-        reload: 'enabled',
-      });
+    this.setState({
+      feeds: newFeeds,
+      reload: 'enabled',
     });
   }
 
